@@ -156,7 +156,6 @@ class ExampleProcessingAlgorithm(QgsProcessingAlgorithm):
 
         chosen_file = self.parameterDefinition('INPUT').valueAsPythonString(parameters['INPUT'], context)
         source_path = os.path.dirname(chosen_file[1:]) + '/'
-        #source_path = "E://GIS Programming/report project/Project_vector_file/"
         output_path = source_path+  "output_layer/"
 
         #Step 1: Clip some outline vector layers (Roads & POI)
@@ -217,18 +216,18 @@ class ExampleProcessingAlgorithm(QgsProcessingAlgorithm):
         Convex_hull = processing.run("native:convexhull", 
             {
                 'INPUT':Service['OUTPUT_LINES'],
-                'OUTPUT':output_path + 'Convex_hull_FOI.shp'
+                'OUTPUT':output_path + 'Convex_hull_POI.shp'
             }
         )
 
-        #Step 5: open the vector layer into QGISe
+        #Step 5: open the vector layer into QGIS
         vlayer_EXTRACT_POLYGON = QgsVectorLayer(source_path + 'EXTRACT_POLYGON.shp', "EXTRACT_POLYGON", "ogr")
         vlayer_BUS_STOPS = QgsVectorLayer(source_path + 'PTV_METRO_BUS_STOP.shp', "BUS_STOPS", "ogr")
         vlayer_Road_Clip = QgsVectorLayer(output_path + 'Road_Clip.shp', "Road_Clip", "ogr")
         vlayer_POI_Clip = QgsVectorLayer(output_path + 'POI_Clip.shp', "POI_Clip", "ogr")
         vlayer_Bus_Stops_Buffer = QgsVectorLayer(output_path + 'Bus_Buffer.shp', "Bus_Stops_Buffer", "ogr")
         vlayer_POI_Service_area = QgsVectorLayer(output_path + 'POI_Service_area.shp', "POI_Service_area", "ogr")
-        vlayer_Convex_hull_POI = QgsVectorLayer(output_path + 'Convex_hull_FOI.shp', 'Convex_hull_FOI', 'ogr')
+        vlayer_Convex_hull_POI = QgsVectorLayer(output_path + 'Convex_hull_POI.shp', 'Convex_hull_POI', 'ogr')
 
         #Step 6: Symbolise the layers and show them on the map
         #Symbolise the vlayer_EXTRACT_POLYGON
